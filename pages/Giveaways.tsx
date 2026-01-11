@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { getDB } from '../storage';
+import { DB } from '../storage';
 import { Giveaway } from '../types';
 
-const Giveaways: React.FC<{ db: ReturnType<typeof getDB>, updateDB: any, adminMode: boolean }> = ({ db, updateDB, adminMode }) => {
+const Giveaways: React.FC<{ db: DB, updateDB: any, adminMode: boolean }> = ({ db, updateDB, adminMode }) => {
   const [showAdd, setShowAdd] = useState(false);
   const [prize, setPrize] = useState('');
   const [winnersCount, setWinnersCount] = useState(1);

@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { getDB, saveDB } from '../storage';
+import { DB, saveDB } from '../storage';
 
-const AdminDashboard: React.FC<{ db: ReturnType<typeof getDB>, updateDB: any, onLogin: (p: string) => boolean, adminMode: boolean }> = ({ db, updateDB, onLogin, adminMode }) => {
+const AdminDashboard: React.FC<{ db: DB, updateDB: any, onLogin: (p: string) => boolean, adminMode: boolean }> = ({ db, updateDB, onLogin, adminMode }) => {
   const [pass, setPass] = useState('');
 
   if (!adminMode) {
@@ -30,7 +30,7 @@ const AdminDashboard: React.FC<{ db: ReturnType<typeof getDB>, updateDB: any, on
     );
   }
 
-  const deleteAnything = (type: 'content' | 'messages' | 'giveaways' | 'rooms', id: string) => {
+  const deleteAnything = (type: 'content' | 'messages' | 'giveaways' | 'gameRooms', id: string) => {
     if(confirm('هل أنت متأكد من الحذف النهائي؟')) {
       updateDB((prev: any) => ({
         ...prev,

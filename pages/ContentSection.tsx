@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getDB, toBase64 } from '../storage';
+import { DB, toBase64 } from '../storage';
 import { ContentItem } from '../types';
 
-const ContentSection: React.FC<{ db: ReturnType<typeof getDB>, updateDB: any, adminMode: boolean }> = ({ db, updateDB, adminMode }) => {
+const ContentSection: React.FC<{ db: DB, updateDB: any, adminMode: boolean }> = ({ db, updateDB, adminMode }) => {
   const { type } = useParams<{ type: string }>();
   const [showAdd, setShowAdd] = useState(false);
   const [newContent, setNewContent] = useState({ text: '', image: '', author: '' });

@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { getDB } from '../storage';
+import { DB } from '../storage';
 import { Message } from '../types';
 
-const SecretFriend: React.FC<{ db: ReturnType<typeof getDB>, updateDB: any }> = ({ db, updateDB }) => {
+const SecretFriend: React.FC<{ db: DB, updateDB: any }> = ({ db, updateDB }) => {
   const [toId, setToId] = useState('');
   const [text, setText] = useState('');
 

@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { getDB, toBase64 } from '../storage';
+import { DB, toBase64 } from '../storage';
 import { Member, Gender } from '../types';
 
 interface Props {
-  db: ReturnType<typeof getDB>;
+  db: DB;
   updateDB: (updater: (prev: any) => any) => void;
   adminMode: boolean;
   setCurrentUser: (m: Member) => void;

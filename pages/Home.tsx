@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getDB } from '../storage';
+import { DB } from '../storage';
 
-const Home: React.FC<{ db: ReturnType<typeof getDB> }> = ({ db }) => {
+const Home: React.FC<{ db: DB }> = ({ db }) => {
   const bestMember = db.members.find(m => m.id === db.bestMemberId);
   const latestNews = db.content.filter(c => c.type === 'news').slice(0, 3);
   const latestPhotos = db.content.filter(c => c.type === 'photo').slice(0, 6);

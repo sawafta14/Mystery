@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { getDB, saveDB, onDBSync } from '../storage';
+import { DB, saveDB } from '../storage';
 
-const Games: React.FC<{ db: any, updateDB: any }> = ({ db, updateDB }) => {
+const Games: React.FC<{ db: DB, updateDB: any }> = ({ db, updateDB }) => {
   const [tab, setTab] = useState<'roulette' | 'xo'>('roulette');
 
   return (

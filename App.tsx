@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
-import { getDB, saveDB, isAdmin, onDBSync } from './storage';
+import { saveDB, isAdmin, subscribeToDB, DB } from './storage';
 import { Member } from './types';
 
 import Navbar from './components/Navbar';
@@ -15,32 +15,42 @@ import Giveaways from './pages/Giveaways';
 import BirthdayPage from './pages/BirthdayPage';
 
 const App: React.FC = () => {
-  const [db, setDb] = useState(getDB());
+  const [db, setDb] = useState<DB | null>(null);
   const [adminMode, setAdminMode] = useState(false);
   const [currentUser, setCurrentUser] = useState<Member | null>(null);
 
   useEffect(() => {
-    const refresh = () => setDb(getDB());
-    window.addEventListener('storage', refresh);
-    onDBSync(refresh);
-    return () => window.removeEventListener('storage', refresh);
+    const unsubscribe = subscribeToDB((data) => {
+      setDb(data);
+    });
+    return () => unsubscribe();
   }, []);
 
-  const updateDB = (updater: (prev: ReturnType<typeof getDB>) => ReturnType<typeof getDB>) => {
-    const next = updater(getDB());
+  const updateDB = (updater: (prev: DB) => DB) => {
+    if (!db) return;
+    const next = updater(db);
     setDb(next);
-    saveDB(next);
+    saveDB(next); 
   };
 
+  if (!db) return (
+    <div className="min-h-screen bg-[#020617] flex items-center justify-center">
+       <div className="text-center space-y-4">
+          <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-indigo-400 font-bold animate-pulse">جاري الاتصال بسيرفر Mystery الأونلاين...</p>
+       </div>
+    </div>
+  );
+
   const today = new Date().toISOString().split('T')[0].slice(5);
-  const birthdayMember = db.members.find(m => m.birthDate?.slice(5) === today);
+  const birthdayMember = db.members.find((m: Member) => m.birthDate?.slice(5) === today);
 
   return (
     <HashRouter>
-      <div className="min-h-screen bg-[#020617] text-slate-100 pb-20 md:pb-10">
+      <div className="min-h-screen bg-transparent text-slate-100 pb-20 md:pb-10">
         <Navbar adminMode={adminMode} currentUser={currentUser} />
         
-        <div className="container mx-auto px-4 py-6 max-w-7xl">
+        <div className="container mx-auto px-4 py-6 max-w-7xl relative z-10">
           {birthdayMember && (
             <Link to={`/birthday/${birthdayMember.id}`} className="block mb-8 group">
               <div className="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 p-[2px] rounded-2xl animate-pulse">
@@ -70,7 +80,6 @@ const App: React.FC = () => {
           </Routes>
         </div>
 
-        {/* Mobile Navigation */}
         <div className="fixed bottom-0 left-0 right-0 md:hidden glass border-t border-white/5 p-3 flex justify-around items-center z-[100]">
           <Link to="/" className="flex flex-col items-center gap-1 text-[10px] text-slate-400 hover:text-white">
             <span className="text-xl">🔥</span>الرئيسية

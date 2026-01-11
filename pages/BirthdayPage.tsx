@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getDB } from '../storage';
+import { DB } from '../storage';
 
-const BirthdayPage: React.FC<{ db: ReturnType<typeof getDB> }> = ({ db }) => {
+const BirthdayPage: React.FC<{ db: DB }> = ({ db }) => {
   const { id } = useParams<{ id: string }>();
   const member = db.members.find(m => m.id === id);
   const [comment, setComment] = useState('');
