@@ -1,0 +1,8 @@
+{
+  "name": "Mystery Clan Official",
+  "description": "A comprehensive, interactive web portal for the Mystery Clan in the Arena server, featuring member management, live games, giveaways, and media sharing.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

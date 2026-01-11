@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Clan | The Elite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --accent: #f59e0b;
+        }
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* تأثير النجوم المتطور */
+        .stars-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at bottom, #0f172a 0%, #020617 100%);
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity); transform: scale(1.2); }
+        }
+
+        /* توهج سديمي خلفي */
+        .nebula {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+            filter: blur(80px);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div class="stars-wrapper" id="stars-container">
+        <div class="nebula" style="top: 10%; left: 10%;"></div>
+        <div class="nebula" style="bottom: 10%; right: 10%; background: radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, transparent 70%);"></div>
+    </div>
+    
+    <script>
+        const container = document.getElementById('stars-container');
+        const starCount = 200;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const size = Math.random() * 2 + 1;
+            const duration = Math.random() * 3 + 2;
+            const delay = Math.random() * 5;
+            const maxOpacity = Math.random() * 0.7 + 0.3;
+
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${duration}s`);
+            star.style.setProperty('--max-opacity', maxOpacity);
+            star.style.animationDelay = `${delay}s`;
+            
+            // إضافة بريق إضافي لبعض النجوم
+            if (Math.random() > 0.9) {
+                star.style.boxShadow = '0 0 10px white';
+                star.style.background = 'linear-gradient(white, #6366f1)';
+            }
+
+            container.appendChild(star);
+        }
+    </script>
+
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
